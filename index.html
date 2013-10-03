@@ -1,0 +1,57 @@
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    <title>Ajax</title>
+<style type="text/css">
+/*td
+{
+	height:100px;
+	width:100px;
+	border:2px solid black;
+}*/
+</style>
+    <link media="all" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/ui-lightness/jquery-ui.css" rel="stylesheet" />
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script><script type="text/javascript">
+
+    $(document).ready(function(){
+
+        
+        $('#nameSearch').keyup(function(){
+            $('#post').submit();
+        });
+        $(".datepicker").datepicker({dateFormat: "yy-mm-dd", showOn: "button"}).next('button').text('').button({icons: {primary: 'ui-icon-calendar'},text: false});
+        $('input:last').click(function(){
+            $('#post').submit();
+        });   
+        $("#post").on('submit', function(){
+            $.post('process.php', $('#post').serialize(), function(dummy){
+                console.log(dummy);
+                // var minDate = dummy.arms[0];
+                $("table").html(dummy.first);
+                $("table").append(dummy.main[0]);
+                $('#pagination').html(dummy.page);
+            }, "json");
+            return false;
+        });
+                $("#post").submit();
+    });
+
+</script>
+</head>
+<body>
+<div id="wrapper">
+    <form id="post" action="process.php" method="post">
+        Name: <input type ="text" id="nameSearch" name="nameSearch"/>
+        <input type="text" name="date" class="datepicker">
+        <input type='text' name="date2"class='datepicker'>
+        <!-- <input type="submit" value="Search"/> -->
+    </form>
+    <div id='pagination'></div>
+    <table>
+            
+    </table>
+</div>
+</body>
+</html>
