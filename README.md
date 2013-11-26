@@ -1,4 +1,4 @@
 pagination
 ==========
 
-ajax intermediate assignment
+Custom pagination for database search
