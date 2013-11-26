@@ -15,6 +15,14 @@
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script><script type="text/javascript">
 
+function attach_handlers(dummy)
+    {
+        $('a').click(function(){
+            var a = $(this).text();
+            $('table').html((dummy.thead + dummy.main[a]));
+        });
+    }
+
     $(document).ready(function(){
 
         
@@ -29,13 +37,14 @@
             $.post('process.php', $('#post').serialize(), function(dummy){
                 console.log(dummy);
                 // var minDate = dummy.arms[0];
-                $("table").html(dummy.first);
-                $("table").append(dummy.main[0]);
+                $("table").html((dummy.thead + dummy.main[1]));
                 $('#pagination').html(dummy.page);
+                attach_handlers(dummy);
             }, "json");
             return false;
         });
-                $("#post").submit();
+        
+         $("#post").submit();
     });
 
 </script>
